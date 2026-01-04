@@ -1,4 +1,8 @@
+import typing as t
 from pydantic import BaseModel, EmailStr
+
+if t.TYPE_CHECKING:
+    EmailStr = t.Annotated[str, ...]
 
 
 class UserCreate(BaseModel):

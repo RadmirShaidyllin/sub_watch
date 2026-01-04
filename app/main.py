@@ -5,7 +5,7 @@ from sqlalchemy import text
 from app.config import settings
 from app.db.session import engine
 
-from app.auth.router import auth_router
+from app.api.v1.auth.router import auth_router
 
 
 @asynccontextmanager
