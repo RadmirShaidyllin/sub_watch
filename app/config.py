@@ -29,6 +29,7 @@ class Settings(BaseSettings):
     refresh_token_expire_days: int = Field(default=30, validation_alias="REFRESH_TOKEN_EXPIRE_DAYS")
     jwt_algorithm: str = Field(default="HS256", validation_alias="JWT_ALGORITHM")
     token_type: str = Field(default="bearer", validation_alias="TOKEN_TYPE")
+    bot_token: str = Field(..., validation_alias="BOT_TOKEN")
 
     db_host: str = Field(default="localhost", validation_alias="DB_HOST")
     db_port: int = Field(default=5432, validation_alias="DB_PORT")

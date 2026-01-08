@@ -2,6 +2,7 @@ from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.v1.auth.repository import UserRepository
 from app.api.v1.auth.models import User
+from app.api.v1.auth.schemas import TelegramAuth
 from app.api.v1.auth.security import hash_password, verify_password
 
 
@@ -32,11 +33,14 @@ class AuthService:
 
         return user
 
-    async def login_telegram(self, db: AsyncSession, tg_id: int):
-        user = await self.repo.get_by_tg(db, tg_id)
+    async def login_or_register_telegram(self, db: AsyncSession, tg_data: TelegramAuth):
+        user = await self.repo.get_by_tg(db, tg_data.id)
 
         if not user:
-            user = User(tg_id=tg_id, is_active=True)
+            user = User(
+                tg_id=tg_data.id,
+                is_active=True
+            )
             user = await self.repo.create(db, user)
 
         return user

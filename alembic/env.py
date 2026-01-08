@@ -9,9 +9,13 @@ from alembic import context
 from sqlalchemy.ext.asyncio import create_async_engine
 
 import os
+
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), '..')))
 
-from app.db.base import Base
+from app.db.all_models import Base
+# from app.api.v1.auth.models import User
+# from app.api.v1.payments.models import Payment
+# from app.api.v1.subscriptions.models import Subscription
 from app.config import settings
 
 # this is the Alembic Config object, which provides
@@ -28,6 +32,7 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = Base.metadata
+
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -58,10 +63,12 @@ def run_migrations_offline() -> None:
     with context.begin_transaction():
         context.run_migrations()
 
+
 def do_run_migrations(connection):
     context.configure(connection=connection, target_metadata=target_metadata)
     with context.begin_transaction():
         context.run_migrations()
+
 
 async def run_migrations_online() -> None:
     """Run migrations in 'online' mode.
@@ -85,6 +92,7 @@ async def run_migrations_online() -> None:
 def run_async_migrations():
     """Запуск асинхронных миграций"""
     asyncio.run(run_migrations_online())
+
 
 if context.is_offline_mode():
     run_migrations_offline()
