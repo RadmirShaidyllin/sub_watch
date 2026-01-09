@@ -3,18 +3,10 @@ from datetime import date
 from decimal import Decimal
 import typing as t
 
-from sqlalchemy import (
-    Date,
-    Numeric,
-    String,
-    ForeignKey,
-    text,
-    CheckConstraint,
-)
+from sqlalchemy import Date, Numeric, String, ForeignKey, text, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
-
 
 if t.TYPE_CHECKING:
     from app.api.v1.subscriptions.models import Subscription
@@ -25,6 +17,7 @@ class Payment(Base):
 
     __table_args__ = (
         CheckConstraint("amount > 0", name="payment_amount_positive"),
+        UniqueConstraint('subscription_id', 'paid_at', name='uq_payment_period'),
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)

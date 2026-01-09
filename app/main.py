@@ -8,6 +8,7 @@ from app.db import all_models
 
 from app.api.v1.auth.router import auth_router
 from app.api.v1.subscriptions.router import subscriptions_router
+from app.api.v1.payments.router import payments_router
 
 
 @asynccontextmanager
@@ -29,6 +30,7 @@ app = FastAPI(
 prefix = "/api/v1"
 app.include_router(auth_router, prefix=prefix)
 app.include_router(subscriptions_router, prefix=prefix)
+app.include_router(payments_router, prefix=prefix)
 
 
 @app.get('/')

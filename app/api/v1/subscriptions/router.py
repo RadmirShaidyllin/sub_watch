@@ -13,7 +13,7 @@ service = SubscriptionService()
 async def create_subscription(
     data: SubscriptionCreate,
     db: AsyncSession = Depends(get_db),
-    user_id: int = Depends(get_current_user_id) # Защита здесь
+    user_id: int = Depends(get_current_user_id)
 ):
     return await service.create(db, user_id, data)
 
